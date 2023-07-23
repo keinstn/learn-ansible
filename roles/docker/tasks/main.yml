@@ -1,0 +1,19 @@
+- name: Install Docker
+  ansible.builtin.yum:
+    name: docker
+    state: present
+    update_cache: true
+
+- name: Start docker service
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Install docker compose
+  ansible.builtin.pip:
+    name: docker-compose
+    executable: pip3
+
+- name: Add login user to the docker group
+  ansible.builtin.command: usermod -a -G docker {{ansible_user}}
